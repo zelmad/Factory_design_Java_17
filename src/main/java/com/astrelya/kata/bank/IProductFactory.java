@@ -12,7 +12,8 @@ public class IProductFactory {
             case "LivretA" -> new LivretA(amount);
             case "LDD" -> new LDD(amount);
             case "CompteAVue" -> new CompteAVue(amount);
-            default -> new Pret(amount);
+            case "Pret" -> new Pret(amount);
+            default -> throw new IllegalArgumentException("unknown bank account");
         };
     }
 }

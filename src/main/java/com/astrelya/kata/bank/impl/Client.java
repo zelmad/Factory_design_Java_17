@@ -49,6 +49,10 @@ public class Client implements IClient {
                     LivretA la = (LivretA) product;
                     result = result.add(la.getMonthlyValue());
                 }
+                case PRET -> {
+                    Pret pret = (Pret) product;
+                    result = result.add(pret.getMonthlyValue());
+                }
             }
         }
         return result;

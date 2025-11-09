@@ -36,6 +36,17 @@ public class KataBank implements IBank {
 
     @Override
     public BigDecimal getMonthlyPNL() {
-        return null;
+        BigDecimal monthlyNpl = BigDecimal.ZERO;
+        if(clients.isEmpty())
+            return monthlyNpl;
+        for(IClient client : clients) {
+            BigDecimal clientMonthlyBalance = client.getMonthlyBalance();
+            if(clientMonthlyBalance.compareTo(BigDecimal.ZERO) > 0) {
+                monthlyNpl = monthlyNpl.subtract(clientMonthlyBalance);
+            } else {
+                monthlyNpl = monthlyNpl.add(clientMonthlyBalance.abs());
+            }
+        }
+        return monthlyNpl;
     }
 }
