@@ -10,12 +10,13 @@ import org.apache.commons.lang3.NotImplementedException;
 public class LDD implements IProduct {
 
 	private final ProductType productType;
-	private Double rate;
-	private Double amount;
+	private final Double rate;
+	private final Double amount;
 	
 	public LDD(Double amount) {
 		this.amount = amount;
 		this.productType = ProductType.LDD;
+		this.rate = 1d;
 	}
 	
 	public Double getAmount() {
@@ -27,7 +28,7 @@ public class LDD implements IProduct {
 	}
 	
 	public BigDecimal getMonthlyValue() {
-		throw new NotImplementedException();
+		return BigDecimal.valueOf((this.amount * (this.rate / 100))/12);
 	}
 
 	public ProductType getProductType() {

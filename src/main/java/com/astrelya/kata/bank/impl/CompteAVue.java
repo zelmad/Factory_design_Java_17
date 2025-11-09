@@ -15,6 +15,7 @@ public class CompteAVue implements IProduct {
 	public CompteAVue(Double amount) {
 		this.amount = amount;
 		this.productType = ProductType.COMPTEAVUE;
+		this.rate = 0.5;
 	}
 	
 	public Double getAmount() {
@@ -26,7 +27,7 @@ public class CompteAVue implements IProduct {
 	}
 	
 	public BigDecimal getMonthlyValue() {
-		throw new NotImplementedException();
+		return BigDecimal.valueOf((this.amount * (this.rate / 100))/12);
 	}
 
 	public ProductType getProductType() {

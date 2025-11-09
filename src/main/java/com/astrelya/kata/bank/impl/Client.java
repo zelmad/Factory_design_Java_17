@@ -3,7 +3,6 @@ package com.astrelya.kata.bank.impl;
 import com.astrelya.kata.bank.IClient;
 import com.astrelya.kata.bank.IProduct;
 import com.astrelya.kata.bank.IProductFactory;
-import com.astrelya.kata.bank.ProductType;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -18,8 +17,7 @@ public class Client implements IClient {
     public Client(String email) {
         String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
-        if(!pattern.matcher(email).matches())
-            throw new IllegalArgumentException("client1 is not a valid email");
+        if (!pattern.matcher(email).matches()) throw new IllegalArgumentException("client1 is not a valid email");
         this.email = email;
         this.products = new ArrayList<>();
     }
@@ -36,32 +34,30 @@ public class Client implements IClient {
 
     @Override
     public BigDecimal getMonthlyBalance() {
-        BigDecimal result = null;
-        this.products.stream().forEach(product -> {
+        BigDecimal result = BigDecimal.ZERO;
+        for (IProduct product : this.products) {
             switch (product.getProductType()) {
-                case LDD:
+                case LDD -> {
                     LDD ldd = (LDD) product;
-                    result.add(new BigDecimal((ldd.getAmount() * (ldd.getRate() / 100))/12));
-                    break;
-                case COMPTEAVUE:
+                    result = result.add(ldd.getMonthlyValue());
+                }
+                case COMPTEAVUE -> {
                     CompteAVue compteAVue = (CompteAVue) product;
-                    result.add(new BigDecimal((compteAVue.getAmount() * (compteAVue.getRate() / 100))/12));
-                    break;
-                case LIVRETA:
+                    result = result.add(compteAVue.getMonthlyValue());
+                }
+                case LIVRETA -> {
                     LivretA la = (LivretA) product;
-                    result.add(new BigDecimal((la.getAmount() * (la.getRate() / 100))/12));
-                    break;
+                    result = result.add(la.getMonthlyValue());
+                }
             }
-        });
+        }
         return result;
     }
 
     @Override
     public void addProduct(String productType, Double amount) {
         IProductFactory iProductFactory = new IProductFactory();
-        if(products.stream()
-                .anyMatch(prd -> Objects.equals(productType, prd.getProductType().toString()))
-        ) {
+        if (products.stream().anyMatch(prd -> productType.equalsIgnoreCase(prd.getProductType().toString()))) {
             throw new IllegalArgumentException(this.email + " cannot have two " + productType);
         }
         products.add(iProductFactory.createProduct(productType, amount));

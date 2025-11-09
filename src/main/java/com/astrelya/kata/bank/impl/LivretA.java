@@ -12,11 +12,12 @@ public class LivretA implements IProduct {
 
 	private final ProductType productType;
 	private Double rate;
-	private Double amount;
+	private final Double amount;
 	
 	public LivretA(Double amount) {
 		this.amount = amount;
 		this.productType = ProductType.LIVRETA;
+		this.rate = 0.75;
 	}
 	
 	public Double getAmount() {
@@ -28,7 +29,7 @@ public class LivretA implements IProduct {
 	}
 	
 	public BigDecimal getMonthlyValue() {
-		throw new NotImplementedException();
+		return BigDecimal.valueOf((this.amount * (this.rate / 100))/12);
 	}
 
 	public ProductType getProductType() {
