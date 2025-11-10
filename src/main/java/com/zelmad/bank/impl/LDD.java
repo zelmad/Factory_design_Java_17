@@ -1,23 +1,21 @@
-package com.astrelya.kata.bank.impl;
+package com.zelmad.bank.impl;
 
 import java.math.BigDecimal;
 
-import com.astrelya.kata.bank.IProduct;
-import com.astrelya.kata.bank.ProductType;
-import org.apache.commons.lang3.NotImplementedException;
+import com.zelmad.bank.Product;
+import com.zelmad.bank.ProductType;
 
 
-
-public class LivretA implements IProduct {
+public class LDD implements Product {
 
 	private final ProductType productType;
-	private Double rate;
+	private final Double rate;
 	private final Double amount;
 	
-	public LivretA(Double amount) {
+	public LDD(Double amount) {
 		this.amount = amount;
-		this.productType = ProductType.LIVRETA;
-		this.rate = 0.75;
+		this.productType = ProductType.LDD;
+		this.rate = 1d;
 	}
 	
 	public Double getAmount() {

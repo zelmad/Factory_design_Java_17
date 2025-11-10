@@ -1,4 +1,4 @@
-package com.astrelya.kata.bank;
+package com.zelmad.bank;
 
 public enum ProductType {
     LDD, PRET, LIVRETA, COMPTEAVUE;

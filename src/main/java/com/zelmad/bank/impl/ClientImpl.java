@@ -1,20 +1,20 @@
-package com.astrelya.kata.bank.impl;
+package com.zelmad.bank.impl;
 
-import com.astrelya.kata.bank.IClient;
-import com.astrelya.kata.bank.IProduct;
-import com.astrelya.kata.bank.IProductFactory;
+import com.zelmad.bank.Client;
+import com.zelmad.bank.Product;
+import com.zelmad.bank.ProductFactory;
 
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class Client implements IClient {
+public class ClientImpl implements Client {
 
     private final String email;
 
-    private List<IProduct> products;
+    private List<Product> products;
 
-    public Client(String email) {
+    public ClientImpl(String email) {
         String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
         if (!pattern.matcher(email).matches()) throw new IllegalArgumentException("client1 is not a valid email");
@@ -35,7 +35,7 @@ public class Client implements IClient {
     @Override
     public BigDecimal getMonthlyBalance() {
         BigDecimal result = BigDecimal.ZERO;
-        for (IProduct product : this.products) {
+        for (Product product : this.products) {
             switch (product.getProductType()) {
                 case LDD -> {
                     LDD ldd = (LDD) product;
@@ -60,10 +60,10 @@ public class Client implements IClient {
 
     @Override
     public void addProduct(String productType, Double amount) {
-        IProductFactory iProductFactory = new IProductFactory();
+        ProductFactory productFactory = new ProductFactory();
         if (products.stream().anyMatch(prd -> productType.equalsIgnoreCase(prd.getProductType().toString()))) {
             throw new IllegalArgumentException(this.email + " cannot have two " + productType);
         }
-        products.add(iProductFactory.createProduct(productType, amount));
+        products.add(productFactory.createProduct(productType, amount));
     }
 }

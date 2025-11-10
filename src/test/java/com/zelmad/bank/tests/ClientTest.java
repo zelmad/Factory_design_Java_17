@@ -1,4 +1,4 @@
-package com.astrelya.kata.bank.tests;
+package com.zelmad.bank.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -12,31 +12,31 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.astrelya.kata.bank.IBank;
-import com.astrelya.kata.bank.IClient;
-import com.astrelya.kata.bank.impl.Client;
-import com.astrelya.kata.bank.impl.KataBank;
+import com.zelmad.bank.Bank;
+import com.zelmad.bank.Client;
+import com.zelmad.bank.impl.ClientImpl;
+import com.zelmad.bank.impl.BankImpl;
 
-public class TestFirstStep {
+public class ClientTest {
 	
-	IBank bank;
+	Bank bank;
 	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 	
 	@Before
 	public void setUp() {
-		bank = new KataBank();
-		bank.addClient(new Client("client1@test.com"));
-		bank.addClient(new Client("client2@test.com"));
-		bank.addClient(new Client("client3@test.com"));
+		bank = new BankImpl();
+		bank.addClient(new ClientImpl("client1@test.com"));
+		bank.addClient(new ClientImpl("client2@test.com"));
+		bank.addClient(new ClientImpl("client3@test.com"));
 	}
 
 	@Test
 	public void client_email_must_be_well_formatted() {
 
 		 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-			 new Client("client1");
+			 new ClientImpl("client1");
 		    });
 		 
 		    String expectedMessage = "client1 is not a valid email";
@@ -50,7 +50,7 @@ public class TestFirstStep {
 		thrown.expect(IllegalArgumentException.class);
 		thrown.expectMessage("Client client1@test.com already exist");
 		
-		bank.addClient(new Client("client1@test.com"));
+		bank.addClient(new ClientImpl("client1@test.com"));
 		
 	}
 	
@@ -63,7 +63,7 @@ public class TestFirstStep {
 	@Test
 	public void client_must_be_found() {
 		
-		Optional<IClient> client = bank.searchClient("client3@test.com");
+		Optional<Client> client = bank.searchClient("client3@test.com");
 		assertTrue("Client client3@test.com should be found", client.isPresent());
 		assertEquals("client3@test.com", client.get().getEmail());
 	}

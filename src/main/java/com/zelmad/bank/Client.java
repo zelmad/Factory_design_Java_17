@@ -1,9 +1,9 @@
-package com.astrelya.kata.bank;
+package com.zelmad.bank;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 
-public interface IClient {
+public interface Client {
 
 	public String getEmail();
 	

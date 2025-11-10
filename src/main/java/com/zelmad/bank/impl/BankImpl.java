@@ -1,26 +1,26 @@
-package com.astrelya.kata.bank.impl;
+package com.zelmad.bank.impl;
 
-import com.astrelya.kata.bank.IBank;
-import com.astrelya.kata.bank.IClient;
+import com.zelmad.bank.Bank;
+import com.zelmad.bank.Client;
 
 import java.math.BigDecimal;
 import java.util.*;
 
-public class KataBank implements IBank {
+public class BankImpl implements Bank {
 
-    private final List<IClient> clients;
+    private final List<Client> clients;
 
-    public KataBank() {
+    public BankImpl() {
         this.clients = new ArrayList<>();
     }
 
     @Override
-    public Collection<IClient> getClientList() {
+    public Collection<Client> getClientList() {
         return this.clients;
     }
 
     @Override
-    public void addClient(IClient client) {
+    public void addClient(Client client) {
         if (clients.stream().anyMatch(clt -> Objects.equals(client.getEmail(), clt.getEmail()))) {
             throw new IllegalArgumentException("Client " + client.getEmail() + " already exist");
         }
@@ -28,7 +28,7 @@ public class KataBank implements IBank {
     }
 
     @Override
-    public Optional<IClient> searchClient(String email) {
+    public Optional<Client> searchClient(String email) {
         return clients.stream()
                 .filter(clt -> Objects.equals(email, clt.getEmail()))
                 .findFirst();
@@ -39,7 +39,7 @@ public class KataBank implements IBank {
         BigDecimal monthlyNpl = BigDecimal.ZERO;
         if(clients.isEmpty())
             return monthlyNpl;
-        for(IClient client : clients) {
+        for(Client client : clients) {
             BigDecimal clientMonthlyBalance = client.getMonthlyBalance();
             if(clientMonthlyBalance.compareTo(BigDecimal.ZERO) > 0) {
                 monthlyNpl = monthlyNpl.subtract(clientMonthlyBalance);

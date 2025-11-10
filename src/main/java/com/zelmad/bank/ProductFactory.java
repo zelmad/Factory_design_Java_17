@@ -1,13 +1,13 @@
-package com.astrelya.kata.bank;
+package com.zelmad.bank;
 
-import com.astrelya.kata.bank.impl.CompteAVue;
-import com.astrelya.kata.bank.impl.LDD;
-import com.astrelya.kata.bank.impl.LivretA;
-import com.astrelya.kata.bank.impl.Pret;
+import com.zelmad.bank.impl.CompteAVue;
+import com.zelmad.bank.impl.LDD;
+import com.zelmad.bank.impl.LivretA;
+import com.zelmad.bank.impl.Pret;
 
-public class IProductFactory {
+public class ProductFactory {
 
-    public IProduct createProduct(String productType, Double amount) {
+    public Product createProduct(String productType, Double amount) {
         return switch (productType) {
             case "LivretA" -> new LivretA(amount);
             case "LDD" -> new LDD(amount);

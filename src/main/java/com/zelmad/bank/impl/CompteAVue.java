@@ -1,12 +1,11 @@
-package com.astrelya.kata.bank.impl;
+package com.zelmad.bank.impl;
 
 import java.math.BigDecimal;
 
-import com.astrelya.kata.bank.IProduct;
-import com.astrelya.kata.bank.ProductType;
-import org.apache.commons.lang3.NotImplementedException;
+import com.zelmad.bank.Product;
+import com.zelmad.bank.ProductType;
 
-public class CompteAVue implements IProduct {
+public class CompteAVue implements Product {
 
 	private final ProductType productType;
 	private Double rate;

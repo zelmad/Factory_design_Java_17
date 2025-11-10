@@ -1,12 +1,11 @@
-package com.astrelya.kata.bank.impl;
+package com.zelmad.bank.impl;
 
-import com.astrelya.kata.bank.IProduct;
-import com.astrelya.kata.bank.ProductType;
+import com.zelmad.bank.Product;
+import com.zelmad.bank.ProductType;
 
 import java.math.BigDecimal;
 
-
-public class Pret implements IProduct {
+public class Pret implements Product {
 
     private final ProductType productType;
     private final Double rate;
