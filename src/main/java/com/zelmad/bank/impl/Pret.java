@@ -3,30 +3,14 @@ package com.zelmad.bank.impl;
 import com.zelmad.bank.Product;
 import com.zelmad.bank.ProductType;
 
-import java.math.BigDecimal;
+public class Pret extends Product {
 
-public class Pret implements Product {
-
+    public static final double RATE = 2d;
     private final ProductType productType;
-    private final Double rate;
-    private final Double amount;
 
     public Pret(Double amount) {
-        this.amount = amount;
+        super(RATE, amount);
         this.productType = ProductType.PRET;
-        this.rate = 2d;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public Double getRate() {
-        return rate;
-    }
-
-    public BigDecimal getMonthlyValue() {
-        return BigDecimal.valueOf(-(this.amount * (this.rate / 100)) / 12);
     }
 
     public ProductType getProductType() {

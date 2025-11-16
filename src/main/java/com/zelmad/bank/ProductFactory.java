@@ -7,13 +7,12 @@ import com.zelmad.bank.impl.Pret;
 
 public class ProductFactory {
 
-    public Product createProduct(String productType, Double amount) {
+    public Product createProduct(ProductType productType, Double amount) {
         return switch (productType) {
-            case "LivretA" -> new LivretA(amount);
-            case "LDD" -> new LDD(amount);
-            case "CompteAVue" -> new CompteAVue(amount);
-            case "Pret" -> new Pret(amount);
-            default -> throw new IllegalArgumentException("unknown bank account");
+            case LIVRETA -> new LivretA(amount);
+            case LDD -> new LDD(amount);
+            case COMPTEAVUE -> new CompteAVue(amount);
+            case PRET -> new Pret(amount);
         };
     }
 }

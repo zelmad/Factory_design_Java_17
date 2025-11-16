@@ -1,13 +1,13 @@
 package com.zelmad.bank;
 
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 
 public interface Client {
 
 	public String getEmail();
 	
-	public Collection<Object> getProductList();
+	public List<Product> getProductList();
 	
 	public BigDecimal getMonthlyBalance();
 	

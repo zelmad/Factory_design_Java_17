@@ -3,6 +3,7 @@ package com.zelmad.bank.impl;
 import com.zelmad.bank.Client;
 import com.zelmad.bank.Product;
 import com.zelmad.bank.ProductFactory;
+import com.zelmad.bank.ProductType;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -12,7 +13,7 @@ public class ClientImpl implements Client {
 
     private final String email;
 
-    private List<Product> products;
+    private final List<Product> products;
 
     public ClientImpl(String email) {
         String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
@@ -28,31 +29,18 @@ public class ClientImpl implements Client {
     }
 
     @Override
-    public Collection<Object> getProductList() {
-        return Collections.singleton(this.products);
+    public List<Product> getProductList() {
+        return this.products;
     }
 
     @Override
     public BigDecimal getMonthlyBalance() {
         BigDecimal result = BigDecimal.ZERO;
         for (Product product : this.products) {
-            switch (product.getProductType()) {
-                case LDD -> {
-                    LDD ldd = (LDD) product;
-                    result = result.add(ldd.getMonthlyValue());
-                }
-                case COMPTEAVUE -> {
-                    CompteAVue compteAVue = (CompteAVue) product;
-                    result = result.add(compteAVue.getMonthlyValue());
-                }
-                case LIVRETA -> {
-                    LivretA la = (LivretA) product;
-                    result = result.add(la.getMonthlyValue());
-                }
-                case PRET -> {
-                    Pret pret = (Pret) product;
-                    result = result.add(pret.getMonthlyValue());
-                }
+            if(product instanceof Pret pret) {
+                result = result.subtract(pret.getMonthlyValue());
+            } else {
+                result = result.add(product.getMonthlyValue());
             }
         }
         return result;
@@ -61,9 +49,12 @@ public class ClientImpl implements Client {
     @Override
     public void addProduct(String productType, Double amount) {
         ProductFactory productFactory = new ProductFactory();
-        if (products.stream().anyMatch(prd -> productType.equalsIgnoreCase(prd.getProductType().toString()))) {
+        boolean checkAccountExistence = products.stream()
+                .anyMatch(prd -> productType.equals(prd.getProductType().getValue()));
+        if (checkAccountExistence) {
             throw new IllegalArgumentException(this.email + " cannot have two " + productType);
         }
-        products.add(productFactory.createProduct(productType, amount));
+        products.add(productFactory.createProduct(ProductType.valueOf(productType), amount));
+
     }
 }

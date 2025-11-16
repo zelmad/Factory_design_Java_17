@@ -15,7 +15,7 @@ public class BankImpl implements Bank {
     }
 
     @Override
-    public Collection<Client> getClientList() {
+    public List<Client> getClientList() {
         return this.clients;
     }
 
