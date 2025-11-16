@@ -54,7 +54,7 @@ public class ClientImpl implements Client {
         if (checkAccountExistence) {
             throw new IllegalArgumentException(this.email + " cannot have two " + productType);
         }
-        products.add(productFactory.createProduct(ProductType.valueOf(productType), amount));
+        products.add(productFactory.createProduct(ProductType.typeFromValue(productType), amount));
 
     }
 }
